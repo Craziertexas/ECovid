@@ -25,7 +25,7 @@ async function addUser(req, res, next) {
 
     try {
 
-        var authenticated = await authentication.getAuthentication(req.body.user,req.body.password,'admin');
+        var authenticated = await authentication.getAuthentication(req.body.user,req.body.password,'admi    n');
         
         if (authenticated) {
             var result = await userModel.addUser(req.body);
