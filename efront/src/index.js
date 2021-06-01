@@ -4,6 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './Views/Home';
 import AdminHome from './Views/Admin/AdminHome';
+import AdminTable from './Views/Admin/AdminTable';
+import AdminAdd from './Views/Admin/AdminAdd';
+import AdminEdit from './Views/Admin/AdminEdit';
 import ManagerHome from './Views/Manager/ManagerHome';
 import RegisterHome from './Views/Register/RegisterHome';
 import VisualizerHome from './Views/Visualizer/VisualizerHome';
@@ -16,7 +19,10 @@ class Index extends React.Component {
         <div>
             <Switch>
               <Route path="/" component={Home} exact/>
-              <Route path="/Admin" component={AdminHome}/>
+              <Route exact path="/Admin" component={AdminHome}/>
+              <Route path="/Admin/Table" component={AdminTable}/>
+              <Route path="/Admin/Add" component={AdminAdd}/>
+              <Route path="/Admin/Edit" component={AdminEdit}/>
               <Route path="/Manager" component={ManagerHome}/>
               <Route path="/Register" component={RegisterHome}/>
               <Route path="/Visualizer" component={VisualizerHome}/>

@@ -39,7 +39,7 @@ function getUsers() {
     return new Promise(async function(resolve, reject) {
 
         try {
-            await mysqlConnection.query("SELECT NAME,LASTNAME,USER,ROLE FROM USERS WHERE ROLE != 'admin';",
+            await mysqlConnection.query("SELECT ID,NAME,LASTNAME,USER,ROLE FROM USERS;",
             function(err,result) {
 
                 if (!err) {
@@ -54,6 +54,26 @@ function getUsers() {
     });
     
 };
+
+function getDetailUser(user) {
+
+    return new Promise(async function(resolve, reject) {
+
+        try {
+            await mysqlConnection.query("SELECT NAME, LASTNAME, ID, USER, PASSWORD, ROLE FROM USERS WHERE USER = '"+user+"';",
+            function(err,result) {
+
+                if (!err) {
+                    result = JSON.parse(JSON.stringify(result));
+                }
+
+                return err ? reject(err.code) : resolve(result);
+            });
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
 function addUser(userInfo) {
 
@@ -100,4 +120,4 @@ function editUser(userInfo) {
     })
 }
 
-module.exports = {checkUser, getUsers, addUser, removeUser, editUser};
+module.exports = {checkUser, getUsers, getDetailUser, addUser, removeUser, editUser};
