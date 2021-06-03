@@ -92,7 +92,7 @@ function AdminChart() {
 
   return (
     <div style={{height:'85%', width:'100%', top:'15%',left:'0%', position:"absolute"}}>
-      <div style={{left:'calc(90% - 360px)', top:'2%', zIndex:'100', position:"absolute"}}>
+      <div style={{left:'calc(90% - 380px)', top:'2%', zIndex:'100', position:"absolute"}}>
         <ButtonGroup aria-label="large outlined primary button group">
         <Button onClick = {onAdd} endIcon={<AddIcon/>}>Add User</Button>
         <Button onClick = {onEdit} endIcon={<EditIcon/>}>Edit User</Button>
