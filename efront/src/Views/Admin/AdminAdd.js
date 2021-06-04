@@ -82,8 +82,6 @@ function AdminAdd() {
         "ROLE": user.role.value
       }
 
-      console.log(params);
-
       sessionCheck.SessionCheck('adminUser','/Admin',history.push);
       await axios.post('http://localhost:4000/Admin/addUser',JSON.stringify(params),
       {
@@ -135,7 +133,6 @@ function AdminAdd() {
   }
   
   function checkEmpty() {
-    console.log(isInteger(user.id));
     if (user.name === "") {
       alert('Empty name!')
       return true;

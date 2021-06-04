@@ -1,5 +1,6 @@
 var authentication = require('./authentication.controller');
 var patientModel = require('../model/patient.model');
+var crypter = require('../utils/encryption'); 
 
 async function getPatients(req, res, next) {
 
@@ -28,6 +29,9 @@ async function addPatient(req, res, next) {
         var authenticated = await authentication.getAuthentication(req.body.user,req.body.password,'assistant');
 
         if (authenticated) {
+            req.body['ID'] = await crypter.decrypt(req.body['ID']);
+            req.body['PATIENTID'] = await crypter.decrypt(req.body['PATIENTID']);
+            console.log(req.body);  
             var result = await patientModel.addPatient(req.body);
             res.json(result);
         } else {
@@ -48,7 +52,12 @@ async function editPatient(req, res, next) {
         var authenticated = await authentication.getAuthentication(req.body.user,req.body.password,'assistant');
 
         if (authenticated) {
+            req.body['ID'] = await crypter.decrypt(req.body['ID']);
+            req.body['PATIENTID'] = await crypter.decrypt(req.body['PATIENTID']);
+            req.body['OLDPATIENTID'] = await crypter.decrypt(req.body['OLDPATIENTID']);
+            console.log(req.body);
             var result = await patientModel.editPatient(req.body);
+            console.log(result);
             res.json(result);
         } else {
             res.json(false);

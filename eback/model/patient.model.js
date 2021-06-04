@@ -17,7 +17,7 @@ function getPatients() {
     return new Promise(async function(resolve, reject) {
 
         try {
-            await mysqlConnection.query("SELECT NAME, LASTNAME, PATIENTID, EXAM FROM PATIENT", 
+            await mysqlConnection.query("SELECT NAME, LASTNAME, ID, SEX, BIRTHDAY, EXAM, EXAMDATE, PATIENTID FROM PATIENT", 
             function(err, result){
 
                 if(!err) {
