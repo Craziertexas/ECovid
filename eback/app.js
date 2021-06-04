@@ -8,6 +8,7 @@ var cors = require('cors')
 //API ROUTES
 var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
+var casesRouter = require('./routes/cases');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(cors());
 //API USES ROUTES
 app.use('/Admin', adminRouter);
 app.use('/Login', loginRouter);
+app.use('/Cases', casesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
