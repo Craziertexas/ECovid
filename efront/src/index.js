@@ -12,6 +12,7 @@ import RegisterHome from './Views/Register/RegisterHome';
 import RegisterTable from './Views/Register/RegisterTable';
 import RegisterAdd from './Views/Register/RegisterAdd';
 import RegisterEdit from './Views/Register/RegisterEdit';
+import RegisterCases from './Views/Register/RegisterCases';
 import VisualizerHome from './Views/Visualizer/VisualizerHome';
 import ErrorPage from './Views/Error';
 
@@ -31,6 +32,7 @@ class Index extends React.Component {
               <Route path="/Register/Table" component={RegisterTable}/>
               <Route path="/Register/Add" component={RegisterAdd}/>
               <Route path="/Register/Edit" component={RegisterEdit}/>
+              <Route path="/Register/Cases" component={RegisterCases}/>
               <Route path="/Visualizer" component={VisualizerHome}/>
               <Route component={ErrorPage}/>
             </Switch>

@@ -8,7 +8,7 @@ import TopButtons from '../../Components/TopButtons';
 import crypter from '../../utils/encryption';
 
 import Button from '@material-ui/core/Button';
-import Select from 'react-select'
+import Select from 'react-select';
 import TextField from '@material-ui/core/TextField';
 
 
