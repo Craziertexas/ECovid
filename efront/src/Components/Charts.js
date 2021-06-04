@@ -92,7 +92,7 @@ function AdminChart() {
 
   return (
     <div style={{height:'85%', width:'100%', top:'15%',left:'0%', position:"absolute"}}>
-      <div style={{left:'calc(90% - 360px)', top:'2%', zIndex:'100', position:"absolute"}}>
+      <div style={{left:'calc(90% - 380px)', top:'2%', zIndex:'100', position:"absolute"}}>
         <ButtonGroup aria-label="large outlined primary button group">
         <Button onClick = {onAdd} endIcon={<AddIcon/>}>Add User</Button>
         <Button onClick = {onEdit} endIcon={<EditIcon/>}>Edit User</Button>
@@ -105,4 +105,109 @@ function AdminChart() {
   );
 }
 
-export default {AdminChart}
+function RegisterChart() {
+
+  let history = useHistory();
+  var [rows, Setrows] = useState([]);
+  var [lastSel, SetlastSel] = useState([]);
+  var [Selected, SetSelected] = useState([]);
+  
+  const columns = [
+    { field: 'PATIENTID', headerName: 'Patient ID', width: 140 },
+    { field: 'ID', headerName: 'Id', width: 160 },
+    { field: 'NAME', headerName: 'First name', width: 150 },
+    { field: 'LASTNAME', headerName: 'Last name', width: 150 },
+    { field: 'SEX', headerName: 'Sex', width: 100},
+    { field: 'AGE', headerName: 'Age', width:150},
+    { field: 'EXAM', headerName: 'Covid Exam', width: 160 },
+    { field: 'EXAMDATE', headerName: 'Exam date', width: 260}
+  ];
+  
+  async function onUpdate() {
+    sessionCheck.SessionCheck('assistantUser','/Register',history.push);
+    await axios.post('http://localhost:4000/Register/getPatients',localStorage.getItem('assistantUser'),
+    {
+      "headers":{"content-type":"application/json"},
+    })
+    .then((res) => {
+      for (var i=0;i<res.data.length; i++) {
+
+        res.data[i]["id"] = res.data[i]["PATIENTID"];
+
+        res.data[i]["AGE"] = Date.now() - res.data[i]["BIRTHDAY"];
+        res.data[i]["AGE"] = new Date(res.data[i]["AGE"]).getFullYear() - 1970;
+
+        res.data[i]["EXAMDATE"] = new Date(res.data[i]["EXAMDATE"]);
+      }
+      Setrows(res.data);
+    })
+    .catch((error) => {
+      alert(error)
+    }); 
+  }
+
+  function onAdd() {
+    sessionCheck.SessionCheck('assistantUser','/Register',history.push);
+    history.push("/Register/Add");
+  }
+
+  function onEdit() {
+    sessionCheck.SessionCheck('assistantUser','/Register',history.push);
+    if (Selected.length === 1) {
+      history.push("/Register/Edit",lastSel);
+    }else {
+      alert('Add operation only for one user');
+    }
+  }
+
+  async function onDelete() {
+    sessionCheck.SessionCheck('assistantUser','/Register',history.push);
+    if (Selected.length === 1) {
+      var params = JSON.parse(localStorage.getItem('assistantUser'));
+      params['PATIENTID'] = lastSel.PATIENTID;
+      sessionCheck.SessionCheck('assistantUser','/Register',history.push);
+      await axios.post('http://localhost:4000/Register/deletePatient',JSON.stringify(params),
+      {
+        "headers":{"content-type":"application/json"}
+      })
+      .then((res) => {
+        if(res.data) {
+          alert('delete Success');
+        } else {
+          alert('failed delete');
+        } 
+      })
+      .catch((error) => {
+        alert(error);
+      });
+    } else {
+      alert('Delete operation only for one user');
+    }
+  }
+
+  function onSelectRow(row) {
+    SetlastSel(row.data);
+  }
+
+  function onUpdateSelectRows(rows) {
+    SetSelected(rows.selectionModel);
+  }
+
+  return (
+    <div style={{height: '100%', width:'100%', top:'0%',left:'0%', position:"absolute"}}>
+      <div style={{left:'calc(0% + 10px)', top:'7%', zIndex:'100', position:"absolute"}}>
+          <ButtonGroup aria-label="large outlined primary button group">
+          <Button onClick = {onAdd} endIcon={<AddIcon/>}>Add User</Button>
+          <Button onClick = {onEdit} endIcon={<EditIcon/>}>Edit User</Button>
+          <Button onClick = {onDelete} endIcon={<DeleteIcon/>}>Delete User</Button>
+          <Button onClick={onUpdate}>Update</Button>
+          </ButtonGroup>
+      </div>
+    <div style={{height:'85%', width:'100%', top:'15%',left:'0%', position:"absolute"}}>
+      <DataGrid rows={rows} columns={columns} pageSize={10} checkboxSelection onRowSelected={onSelectRow} onSelectionModelChange={onUpdateSelectRows}/>
+    </div>
+    </div>
+  );
+}
+
+export default {AdminChart, RegisterChart}

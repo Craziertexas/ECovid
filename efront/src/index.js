@@ -9,6 +9,9 @@ import AdminAdd from './Views/Admin/AdminAdd';
 import AdminEdit from './Views/Admin/AdminEdit';
 import ManagerHome from './Views/Manager/ManagerHome';
 import RegisterHome from './Views/Register/RegisterHome';
+import RegisterTable from './Views/Register/RegisterTable';
+import RegisterAdd from './Views/Register/RegisterAdd';
+import RegisterEdit from './Views/Register/RegisterEdit';
 import VisualizerHome from './Views/Visualizer/VisualizerHome';
 import ErrorPage from './Views/Error';
 
@@ -24,7 +27,10 @@ class Index extends React.Component {
               <Route path="/Admin/Add" component={AdminAdd}/>
               <Route path="/Admin/Edit" component={AdminEdit}/>
               <Route path="/Manager" component={ManagerHome}/>
-              <Route path="/Register" component={RegisterHome}/>
+              <Route exact path="/Register" component={RegisterHome}/>
+              <Route path="/Register/Table" component={RegisterTable}/>
+              <Route path="/Register/Add" component={RegisterAdd}/>
+              <Route path="/Register/Edit" component={RegisterEdit}/>
               <Route path="/Visualizer" component={VisualizerHome}/>
               <Route component={ErrorPage}/>
             </Switch>

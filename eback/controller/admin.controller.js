@@ -94,7 +94,6 @@ async function editUser(req, res, next) {
         req.body['ID'] = await crypter.decrypt(req.body['ID']);
         req.body['OLDUSER'] = await crypter.decrypt(req.body['OLDUSER']);
         if (authenticated) {
-            console.log(req.body);
             var result = await userModel.editUser(req.body);
             res.json(result);
         } else {
