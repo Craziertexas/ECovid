@@ -25,22 +25,12 @@ async function addStatus(req, res, next){
 
         var authenticated = await authentication.getAuthentication(req.body.user,req.body.password,'assistant');
 
-        if (authentitaced){
-            console.log(req.body);
-            req.body['STATUS'] = await CryptoKeyPair.decrypt(req.body['STATUS']);
-            req.body['LASTUPDATE'] = await CryptoKeyPair.decrypt(req.dody['LASTUPDATE']);
-            console.log(req.body);
-            var result = await casesmodel.addStatus(req.body.STATUS);
+        if (authenticated){
+            var result = await casesmodel.addStatus(req.body);
             res.json(result);
-
         } else{
             res.json(false);
-        }  
-
-        if (result=='D'){
-            res.json(false);
-        }
-                
+        } 
 
     } catch (error){
         console.error(error);

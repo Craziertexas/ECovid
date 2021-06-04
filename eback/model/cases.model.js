@@ -2,10 +2,9 @@ var mysql = require('mysql');
 
 const mysqlConnectionParams = {
     host: 'localhost',
-    user: 'root',
-    password: 'admin',
-    database: 'covid_db'
-
+    user: 'david',
+    password: 'mysql123',
+    database: 'ECovid'
 }
 
 try{
@@ -14,31 +13,11 @@ try{
     throw error;
 };
 
-function checkUser( user, password, role ){
-
-    return new Promise(async function (resolve, reject){
-        try {
-            await mysqlConnection.query("SELECT USER, PASSWORD, ROLE FROM USERS WHERE USER = '" + user + "' and ROLE = '" + role + "' and PASSWORD = '" + password + "';",
-            function(err,result){
-
-                if (!err){
-                    result = JSON.parse(JSON.stringify(result));
-                }
-                return err ? reject(err.code) : resolve(result);
-            
-            });
-        } catch(error){
-            reject(error);
-        }
-
-    });
-};
-
 function showCase (caseInfo) {
     return new Promise(async function(resolve, reject){
 
         try {
-            await mysqlConnection.query("SELEC PATIENTID, STATUS, LASTUPDATE FROM CASES WHERE PATIENTID = " + caseInfo.PATIENTID + ";",
+            await mysqlConnection.query("SELECT STATUS, LASTUPDATE FROM CASES WHERE PATIENTID = " + caseInfo.PATIENTID + ";",
             function(err, result){
 
                 if(!err) {
